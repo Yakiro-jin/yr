@@ -2,8 +2,8 @@
 $host = 'localhost';
 $db   = 'papeleria_db'; // Change this to your actual DB name
 $user = 'postgres';     // Change this to your actual DB user
-$pass = 'postgres';     // Change this to your actual DB password
-$port = "5432";
+$pass = '';     // Change this to your actual DB password
+$port = "3000";
 
 $dsn = "pgsql:host=$host;port=$port;dbname=$db;user=$user;password=$pass";
 
