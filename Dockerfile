@@ -10,10 +10,18 @@ RUN apt-get update && apt-get install -y \
 # Habilitamos mod_rewrite (útil para muchas apps)
 RUN a2enmod rewrite
 
+# 🆕 COPIAR CONFIGURACIÓN PERSONALIZADA DE APACHE
+# Eliminamos la configuración por defecto y copiamos la nuestra
+RUN rm /etc/apache2/sites-available/000-default.conf
+COPY apache-config.conf /etc/apache2/sites-available/000-default.conf
+
+# 🆕 HABILITAR LA CONFIGURACIÓN (aunque ya debería estar habilitada)
+RUN a2ensite 000-default.conf
+
 # Copiamos todo el código al contenedor
 COPY . /var/www/html/
 
-# Configuramos permisos
+# Configuramos permisos correctos (www-data es el usuario de Apache)
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html
 
