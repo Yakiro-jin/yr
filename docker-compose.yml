@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    container_name: papeleria_web
+    restart: always
+    ports:
+      - "8080:80"  # Accederás a tu app en http://IP:8080
+    volumes:
+      # En desarrollo puedes montar el código para cambios en vivo
+      - ./:/var/www/html
+    environment:
+      # ESTOS VALORES DEBES CAMBIARLOS SEGÚN TU BD EXISTENTE
+      DB_HOST: 192.168.100.100  # ← CÁMBIALO
+      DB_PORT: 5432                       # Puerto INTERNO de PostgreSQL (casi siempre 5432)
+      DB_NAME: papeleriadb                # ← CÁMBIALO si es diferente
+      DB_USER: postgres                    # ← CÁMBIALO si es diferente
+      DB_PASS: admin123         # ← CÁMBIALO (importante)
+    # Redes: tu app debe estar en la MISMA red que la BD
+    networks:
+      - red_compartida
+
+# Definición de la red (debe existir en Portainer)
+networks:
+  red_compartida:
+    external: true
+    name: postgres # ← CÁMBIALO
